@@ -1,4 +1,14 @@
+"use client";
+
+import { useState } from "react";
+
 export const AutocompleteAddress = () => {
+  const [source, setSource] = useState<any>();
+
+  const getAddress = async () => {
+    const res = fetch("/api/search-address?q=" + source);
+  };
+
   return (
     <div className="mt-5">
       <div>
