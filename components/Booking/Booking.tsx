@@ -4,7 +4,7 @@ import React from "react";
 import { AutocompleteAddress } from "./AutocompleteAddress";
 
 export const Booking = () => {
-  const screenHight = window.innerHeight;
+  const screenHight = window.innerHeight * 0.75;
 
   return (
     <div className="p-5">
