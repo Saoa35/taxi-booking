@@ -4,9 +4,16 @@ import { useState } from "react";
 
 export const AutocompleteAddress = () => {
   const [source, setSource] = useState<any>();
+  const [addressList, setAddressList] = useState<any>([]);
 
   const getAddress = async () => {
-    const res = fetch("/api/search-address?q=" + source);
+    const res = await fetch("/api/search-address?q=" + source, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const result = (await res).json();
   };
 
   return (
