@@ -1,19 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const AutocompleteAddress = () => {
   const [source, setSource] = useState<any>();
   const [addressList, setAddressList] = useState<any>([]);
 
-  const getAddress = async () => {
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      getAddressList();
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [source]);
+
+  const getAddressList = async () => {
     const res = await fetch("/api/search-address?q=" + source, {
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    const result = (await res).json();
+    const result = res.json();
+    setAddressList(result);
   };
 
   return (
@@ -23,6 +32,7 @@ export const AutocompleteAddress = () => {
         <input
           type="text"
           className="p-1 bg-white border-[1px] w-full rounded-md outline-none focus:border-yellow-300"
+          onChange={(e) => setSource(e.target.value)}
         />
       </div>
 
@@ -31,6 +41,7 @@ export const AutocompleteAddress = () => {
         <input
           type="text"
           className="p-1 bg-white border-[1px] w-full rounded-md outline-none focus:border-yellow-300"
+          onChange={(e) => setSource(e.target.value)}
         />
       </div>
     </div>
